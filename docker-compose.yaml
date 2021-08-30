@@ -1,7 +1,7 @@
 version: "3"
 
 services: 
-  msm-rest_api:
+  msmapi_stg:
     image: $FULL_IMAGE_NAME:$TAG
     build: 
       context: .
