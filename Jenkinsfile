@@ -6,7 +6,7 @@ pipeline {
     environment {
         DOCKER_HUB_CREDENTIALS = credentials("dockerhub")
         DOCKER_HUB_REPO = "zkpain"
-        IMAGE_NAME = "msm-rest_api"
+        IMAGE_NAME = "msmapi_stg"
         IMAGE_TAG_STG = "$BUILD_NUMBER-stg"
         IMAGE_TAG_PROD = "$BUILD_NUMBER-prod"
         FULL_IMAGE_NAME = "$DOCKER_HUB_REPO/$IMAGE_NAME"
