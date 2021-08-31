@@ -30,7 +30,7 @@
         ]
     },
     "scripts": {
-        "test": "jest  --coverage --testPathPattern=src/",
+        "test": "jest  --coverage --testPathPattern=src/main/modules/",
         "test:katas": "jest  --coverage --testPathPattern=katas/",
         "lint": "eslint . --ext .js",
         "lint-fix": "eslint . --fix",
