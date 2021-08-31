@@ -19,8 +19,8 @@
         "verbose": true,
         "collectCoverage": true,
         "collectCoverageFrom": [
-            "src/**/*.{js,jsx}",
-            "!katas/",
+            "src/main/*.{js,jsx}",
+            "!/katas/",
             "!src/test/"
         ],
         "coverageReporters": [
