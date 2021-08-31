@@ -17,7 +17,6 @@
             "src"
         ],
         "verbose": true,
-        "collectCoverage": true,
         "collectCoverageFrom": [
             "src/main/modules/*.{js,jsx}",
             "!/katas/",
@@ -33,7 +32,7 @@
         ]
     },
     "scripts": {
-        "test": "jest  --coverage --testPathPattern=src/main/modules/",
+        "test": "jest  --coverage --testPathPattern=src/",
         "test:katas": "jest  --coverage --testPathPattern=katas/",
         "lint": "eslint . --ext .js",
         "lint-fix": "eslint . --fix",
