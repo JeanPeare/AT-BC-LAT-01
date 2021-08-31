@@ -21,7 +21,10 @@
         "coverageReporters": [
             "json",
             "html",
-            "lcov"
+            "lcov",
+            "cobertura",
+            "xml",
+            "text"
         ]
     },
     "scripts": {
