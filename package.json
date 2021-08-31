@@ -18,9 +18,7 @@
         ],
         "verbose": true,
         "collectCoverageFrom": [
-            "src/main/modules/*.{js,jsx}",
-            "!/katas/",
-            "!src/test/"
+            "src/main/modules/Scenario.js",
         ],
         "coverageReporters": [
             "json",
