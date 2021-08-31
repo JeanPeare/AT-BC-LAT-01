@@ -31,7 +31,7 @@ pipeline {
 
          stage ('sonarqube Analysis') {
             environment {
-                COVERAGE_PATH = "coverage/lcov.info"
+                COVERAGE_PATH = "coverage/cobertura-coverage.xml"
             }
             steps {
                 script {
