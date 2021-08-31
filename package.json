@@ -20,7 +20,8 @@
         "collectCoverage": true,
         "coverageReporters": [
             "json",
-            "html"
+            "html",
+            "lcov"
         ]
     },
     "scripts": {
