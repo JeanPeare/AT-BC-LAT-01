@@ -26,6 +26,7 @@ pipeline {
         stage('Eslint validations') {
             steps {
                 sh "npm run lint"
+                sh "npm jest --coverage"
             }
         }
 
