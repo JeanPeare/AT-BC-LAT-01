@@ -50,12 +50,12 @@ pipeline {
             environment{ TAG = "$IMAGE_TAG_STG" }
             steps {
                 sh "echo '$DOCKER_HUB_CREDENTIALS_PSW' | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
-                sh "docker-compose push $FULL_IMAGE_NAME:$TAG"
+                sh "docker-compose push $IMAGE_NAME"
             }
             post {
                 always {
                     script {
-                        sh "docker rmi -f $FULL_IMAGE_NAME:$TAG"
+                        sh "docker rmi -f $IMAGE_NAME:$TAG"
                         sh "docker logout"
                     }
                 }
