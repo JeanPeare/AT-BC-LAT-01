@@ -1,7 +1,7 @@
 pipeline {
     agent {label 'Linux' }
     tools {
-        nodejs 'NodeJs 16.8.0'
+        nodejs 'NodeJs 14.17.5'
     }
     environment {
         DOCKER_HUB_CREDENTIALS = credentials("dockerhub")
@@ -10,6 +10,7 @@ pipeline {
         IMAGE_TAG_STG = "$BUILD_NUMBER-stg"
         IMAGE_TAG_PROD = "$BUILD_NUMBER-prod"
         FULL_IMAGE_NAME = "$DOCKER_HUB_REPO/$IMAGE_NAME"
+        PROJECT_NAME = "msm_prjct"
     }
     stages {
         stage('Install') {
@@ -27,6 +28,24 @@ pipeline {
                 sh "npm run lint"
             }
         }
+
+         stage ('sonarqube Analysis') {
+            environment {
+                COVERAGE_PATH = "coverage/lcov.info"
+            }
+            steps {
+                script {
+                    def scannerHome = tool 'sonarscanner4.6.2'
+                    def scannerParameters = "-Dsonar.projectName=$PROJECT_NAME " + 
+                        "-Dsonar.projectKey=$PROJECT_NAME -Dsonar.sources=. " + 
+                        "-Dsonar.javascript.lcov.reportPaths=$COVERAGE_PATH"
+                    withSonarQubeEnv('sonarqube') {
+                        sh "${scannerHome}/bin/sonar-scanner ${scannerParameters}"
+                    }
+                }
+            }
+        }
+
         stage('Build Image') {
             when { 
                 branch 'main' 
