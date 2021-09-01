@@ -76,7 +76,7 @@ pipeline {
             steps {
                // sh "echo '$DOCKER_HUB_CREDENTIALS_PSW' | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
                // sh "docker-compose push $IMAGE_NAME"
-                sh "echo '$NEXUS_CREDENTIALS_PSW' | docker login -u $NEXUS_CREDENTIALS_USR --password-stdin"
+                sh "echo '$NEXUS_CREDENTIALS_PSW' | docker login -u $NEXUS_CREDENTIALS_USR --password-stdin $NEXUS_SERVER_URL"
                 sh "docker push $PRIVATE_IMAGE_NAME:$TAG"
             }
             post {
