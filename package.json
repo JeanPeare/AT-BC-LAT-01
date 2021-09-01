@@ -17,7 +17,7 @@
             "src"
         ],
         "verbose": true,
-        "collectCoverage": true
+        "collectCoverage": true,
         "coverageReporters": [
             "json",
             "html",
