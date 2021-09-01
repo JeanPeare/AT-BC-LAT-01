@@ -49,9 +49,9 @@ pipeline {
         }
 
         stage('Build Image') {
-            when { 
+     /*       when { 
                 branch 'main' 
-            }
+            }*/
             environment{ 
                 TAG = "$IMAGE_TAG_STG"
             }
