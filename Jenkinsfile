@@ -4,7 +4,7 @@ pipeline {
         nodejs 'NodeJs 14.17.5'
     }
     environment {
-        NEXUS_SERVER_URL = "10.0.2.15:8082"
+        NEXUS_SERVER_URL = "172.29.162.106:8082"
         DOCKER_HUB_CREDENTIALS = credentials("dockerhub")
         DOCKER_HUB_REPO = "zkpain"
         IMAGE_NAME = "msmapi_stg"
