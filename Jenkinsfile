@@ -31,14 +31,14 @@ pipeline {
 
          stage ('sonarqube Analysis') {
             environment {
-                COVERAGE_PATH = "coverage/lcov.info"
+                COVERAGE_PATH = "coverage/cobertura-coverage.xml"
             }
             steps {
                 script {
                     def scannerHome = tool 'sonarscanner4.6.2'
                     def scannerParameters = "-Dsonar.projectName=$PROJECT_NAME " + 
                         "-Dsonar.projectKey=$PROJECT_NAME -Dsonar.sources=. " + 
-                        "-Dsonar.javascript.lcov.reportPaths=$COVERAGE_PATH"
+                        "-Dsonar.flex.cobertura.reportPaths=$COVERAGE_PATH"
                     withSonarQubeEnv('sonarqube') {
                         sh "${scannerHome}/bin/sonar-scanner ${scannerParameters}"
                     }
