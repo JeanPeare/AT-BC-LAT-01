@@ -5,11 +5,15 @@ services:
     image: $FULL_IMAGE_NAME:$TAG
     build: 
       context: .
-    container_name: $IMAGE_NAME-$TAG
+    #container_name: $IMAGE_NAME-$TAG
     ports: 
       - 3000:3000
     networks: 
       - atnet
+    volumes: 
+      - /home/vagrant/keys:/keys/
+
+    
 
 networks:
   atnet:
