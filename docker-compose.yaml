@@ -7,7 +7,7 @@ services:
       context: .
     #container_name: $IMAGE_NAME-$TAG
     ports: 
-      - 3000:3000
+      - 3000-3002:3000
     networks: 
       - atnet
     volumes: 
