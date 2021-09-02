@@ -113,6 +113,19 @@ pipeline {
                 sleep 15
             }
         }
+        
+        
+        stage ('Acceptance Tests') {
+            environment {
+                API_URL = "http://10.0.2.15"
+                PORT_1 = "3000"
+                PORT_2 = "3001"
+            }
+            steps {
+                sh "curl -I $API_URL:$PORT_1 --silent | grep 200"
+                sh "curl -I $API_URL:$PORT_2 --silent | grep 200"
+            }
+        }
 
     }
 }
