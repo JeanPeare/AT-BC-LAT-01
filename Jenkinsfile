@@ -98,5 +98,20 @@ pipeline {
                 }
             }
         }
+
+        //CI Pipeline Finish
+
+        //CD Pipeline Start
+        stage ('Deploy to Staging') {
+            environment{
+                TAG = "$IMAGE_TAG_STG"
+                SERVICE_NAME = "$IMAGE_NAME"
+                SERVICES_QUANTITY = "2"
+            }
+            steps {
+                sh "docker-compose up -d --scale $SERVICE_NAME=$SERVICES_SERVICESQUANTITY --force-recreate"
+                sleep 15
+            }
+        }
     }
 }
