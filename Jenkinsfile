@@ -109,7 +109,7 @@ pipeline {
                 SERVICES_QUANTITY = "2"
             }
             steps {
-                sh "docker-compose up -d --scale $SERVICE_NAME=$SERVICES_SERVICESQUANTITY --force-recreate"
+                sh "docker-compose up -d --scale $SERVICE_NAME=$SERVICES_QUANTITY --force-recreate"
                 sleep 15
             }
         }
