@@ -31,7 +31,7 @@ pipeline {
             }
         }
 
-         stage ('sonarqube Analysis') {
+        stage ('sonarqube Analysis') {
             environment {
                 COVERAGE_PATH = "coverage/lcov.info"
             }
@@ -44,6 +44,14 @@ pipeline {
                     withSonarQubeEnv('sonarqube') {
                         sh "${scannerHome}/bin/sonar-scanner ${scannerParameters}"
                     }
+                }
+            }
+        }
+        
+        stage ('Quality Gate'){
+            steps {
+                timeout(time, 1, unit:'HOUR') {
+                    waitForQualityGate abortPipeline: true
                 }
             }
         }
