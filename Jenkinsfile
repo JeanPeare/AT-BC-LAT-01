@@ -130,5 +130,89 @@ pipeline {
                 sh "curl --location --request PUT $API_URL:$PORT_3/$END_P3 --header 'Content-Type: application/json' --data-raw '{ \"scenario\" : \"gDEM9vj1OjncayQHE8GI\", \"name\" : \"Ryan\", \"type\" : \"PF Squad Soldier\", \"health\" : 1, \"weapon\" : { \"name\" : \"rifle\", \"power\" : 1, \"xScope\" : 1, \"yScope\" : 1 }, \"position\" : { \"xPos\" : 8, \"yPos\" : 1 } }' | grep 200"
             }
         }
+
+        stage ('Tag Production Image') {
+            when { branch 'main' }
+            environment { TAG = "$IMAGE_TAG_PROD" }
+            steps {
+                sh "docker tag $FULL_IMAGE_NAME:$IMAGE_TAG_STG $FULL_IMAGE_NAME:$IMAGE_TAG_PROD"
+                sh "docker tag $FULL_IMAGE_NAME:$IMAGE_TAG_STG $FULL_IMAGE_NAME:latest"
+            }
+        }
+
+        stage('Deliver Image for Production') {
+            when { branch 'main' }
+            environment{ 
+                NEXUS_CREDENTIALS = credentials("nexus")
+            }
+            steps {
+                sh """
+                echo 'Log into Docker Hub'
+                echo '$DOCKER_HUB_CREDENTIALS_PSW' | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
+                echo 'Push image to Docker Hub'
+                docker push $FULL_IMAGE_NAME:$IMAGE_TAG_PROD
+                docker push $FULL_IMAGE_NAME:latest
+                """
+            }
+            post {
+                always {
+                    script {
+                        sh """
+                        echo "Removing Image built for Docker Hub"
+                        docker rmi -f $FULL_IMAGE_NAME:$IMAGE_TAG_PROD
+                        docker rmi -f $FULL_IMAGE_NAME:latest
+                        echo 'Logout Docker Hub'
+                        docker logout
+                        """
+                    }
+                }
+            }
+        }
+    // End Continuous Delivery Pipeline
+
+    // Continuos Deployment Pipeline
+        stage ('Continuous Deployment') {
+            when { branch 'main' }
+            environment {
+                PROD_SERVER = "ubuntu@ec2-3-86-234-67.compute-1.amazonaws.com"
+                FOLDER_NAME = "node-web-app"
+                SCRIPT = "deployment.sh"
+                COMPOSE_FILE = "prod.docker-compose.yaml"
+                ENV_FILE = ".env"
+            }
+            stages {
+                stage ('Create .env file') {
+                    when { branch 'main' }
+                    environment{ TAG = "latest" }
+                    steps {
+                        sh """
+                        echo 'FULL_IMAGE_NAME=$FULL_IMAGE_NAME' > $ENV_FILE
+                        echo 'TAG=$TAG' >> $ENV_FILE
+                        """
+                    }
+                }
+
+                stage ('Copy files to Prod Server') {
+                    when { branch 'main' }
+                    steps {
+                        sshagent(['prod-key']) {
+                            sh "ssh -o 'StrictHostKeyChecking no' $PROD_SERVER mkdir -p $FOLDER_NAME"
+                            sh "scp $ENV_FILE $SCRIPT $COMPOSE_FILE $PROD_SERVER:/home/ubuntu/$FOLDER_NAME"
+                            sh "ssh -o 'StrictHostKeyChecking no' $PROD_SERVER ls -a /home/ubuntu/$FOLDER_NAME"
+                        }
+                    }
+                }
+
+                stage ('Deploy in Production') {
+                    when { branch 'main' }
+                    steps {
+                        sshagent(['prod-key']) {
+                            sh "ssh -o 'StrictHostKeyChecking no' $PROD_SERVER chmod +x /home/ubuntu/$FOLDER_NAME/$SCRIPT"
+                            sh "ssh -o 'StrictHostKeyChecking no' $PROD_SERVER /home/ubuntu/$FOLDER_NAME/$SCRIPT"
+                        }
+                    }
+                }
+            }
+        }
     }
 }
