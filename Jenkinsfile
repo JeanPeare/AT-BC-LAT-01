@@ -118,16 +118,15 @@ pipeline {
                 API_URL = "http://10.0.2.15"
                 PORT_1 = "3000"
                 PORT_2 = "3001"
-                PORT_3 = "3002"
+                PORT_3 = "300"
                 END_P1 = "scenario"
                 END_P2 = "action"
                 END_P3 = "actor"
                 SC_ID = "3M0DcVmST46NXClnRAYY"
             }
             steps {
-                sh "curl -I $API_URL:$PORT_1/$END_P1/$SC_ID --silent | grep 200"
-                sh "curl --location --request PUT $API_URL:$PORT_2/$END_P2 | grep 200"
-                sh "curl --location --request PUT $API_URL:$PORT_2/$END_P3 | grep 200"
+                sh "curl -I $API_URL:$PORT_1/$END_P1/$SC_ID --silent | grep 200"  
+                sh "curl --location --request PUT 'localhost:3000/action/' --header 'Content-Type: application/json' --data-raw '{"scenario": "gDEM9vj1OjncayQHE8GI", "actor": "Polo", "action": "Shoot Weapon", "target": "east", "scenes": "4"}'| grep 200"
             }
         }
     }
