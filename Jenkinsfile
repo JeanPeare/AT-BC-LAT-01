@@ -118,7 +118,7 @@ pipeline {
                 API_URL = "http://10.0.2.15"
                 PORT_1 = "3000"
                 PORT_2 = "3001"
-                PORT_3 = "300"
+                PORT_3 = "3002"
                 END_P1 = "scenario"
                 END_P2 = "action"
                 END_P3 = "actor"
