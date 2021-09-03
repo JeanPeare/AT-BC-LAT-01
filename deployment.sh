@@ -1,10 +1,10 @@
 #!/bin/bash
 
-cd $HOME/node-web-app
+cd $HOME/msm_prjct
 
 echo "Retrieving the Container ID if exits"
-container1=$(docker ps --filter status=running --filter name=node-web-app* -q | head -n 1)
-container2=$(docker ps --filter status=running --filter name=node-web-app* -q | tail -1)
+container1=$(docker ps --filter status=running --filter name=msm_prjct* -q | head -n 1)
+container2=$(docker ps --filter status=running --filter name=msm_prjct* -q | tail -1)
 
 if [ ! -z $container1 -a ! -z $container2 ];
 then
@@ -27,4 +27,4 @@ then
     fi
 fi
 # Deploying
-docker-compose -f prod.docker-compose.yaml up -d --scale nodeapp=2 --force-recreate
+docker-compose -f prod.docker-compose.yaml up -d --scale msmapi_stg=2 --force-recreate
