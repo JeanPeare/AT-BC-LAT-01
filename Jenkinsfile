@@ -175,7 +175,7 @@ pipeline {
             when { branch 'main' }
             environment {
                 PROD_SERVER = "ubuntu@ec2-18-207-228-156.compute-1.amazonaws.com"
-                FOLDER_NAME = $IMAGE_NAME
+                FOLDER_NAME = '$IMAGE_NAME'
                 SCRIPT = "deployment.sh"
                 COMPOSE_FILE = "prod.docker-compose.yaml"
                 ENV_FILE = ".env"
