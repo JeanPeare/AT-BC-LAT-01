@@ -126,7 +126,8 @@ pipeline {
             }
             steps {
                 sh "curl -I $API_URL:$PORT_1/$END_P1/$SC_ID --silent | grep 200"  
-                sh "curl --location --request PUT 'localhost:3000/action/' --header 'Content-Type: application/json' --data-raw '{ \"scenario\" : \"gDEM9vj1OjncayQHE8GI\", \"actor\" : \"Polo\", \"action\" : \"Shoot Weapon\", \"target\" : \"east\", \"scenes\" : \"4\" }' | grep 200"
+                sh "curl --location --request PUT $API_URL:$PORT_2/$END_P2 --header 'Content-Type: application/json' --data-raw '{ \"scenario\" : \"gDEM9vj1OjncayQHE8GI\", \"actor\" : \"Polo\", \"action\" : \"Shoot Weapon\", \"target\" : \"east\", \"scenes\" : \"4\" }' | grep 200"
+                sh "curl --location --request PUT $API_URL:$PORT_3/$END_P3 --header 'Content-Type: application/json' --data-raw '{ \"scenario\" : \"gDEM9vj1OjncayQHE8GI\", \"name\" : \"Ryan\", \"type\" : \"PF Squad Soldier\", \"health\" : 1, \"weapon\" : { \"name\" : \"rifle\", \"power\" : 1, \"xScope\" : 1, \"yScope\" : 1 }, \"position\" : { \"xPos\" : 8, \"yPos\" : 1 } }' | grep 200"
             }
         }
     }
