@@ -1,0 +1,13 @@
+version: "3"
+
+services: 
+  msmapi_stg:
+    image: $FULL_IMAGE_NAME:$TAG
+    ports: 
+      - 3000-3002:3000
+    networks: 
+      - atnet
+    volumes: 
+      - /home/ubuntu/keys:/keys/
+networks:
+  appnet:
