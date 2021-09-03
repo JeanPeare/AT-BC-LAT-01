@@ -125,8 +125,8 @@ pipeline {
             }
             steps {
                 sh "curl -I $API_URL:$PORT_1/$END_P1/$SC_ID --silent | grep 200"
-                sh "curl --location --request PUT '$API_URL:$PORT_2/$END_P2' --silent | grep 200"
-                sh "curl --location --request PUT $API_URL:$PORT_2/$END_P3 --silent | grep 200"
+                sh "curl --location --request PUT $API_URL:$PORT_2/$END_P2 | grep 200"
+                sh "curl --location --request PUT $API_URL:$PORT_2/$END_P3 | grep 200"
             }
         }
     }
