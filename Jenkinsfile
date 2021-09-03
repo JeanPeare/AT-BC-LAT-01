@@ -75,6 +75,7 @@ pipeline {
                 }
             }
         }
+
         stage('Publish Image') {
             when { branch 'main' }
             environment{ 
@@ -98,9 +99,7 @@ pipeline {
                 }
             }
         }
-
         //CI Pipeline Finish
-
         //CD Pipeline Start
         stage ('Deploy to Staging') {
             environment{
@@ -114,7 +113,6 @@ pipeline {
             }
         }
         
-        
         stage ('Acceptance Tests') {
             environment {
                 API_URL = "http://10.0.2.15"
@@ -122,10 +120,10 @@ pipeline {
                 PORT_2 = "3001"
             }
             steps {
-                sh "curl -I $API_URL:$PORT_1 --silent | grep 200"
-                sh "curl -I $API_URL:$PORT_2 --silent | grep 200"
+                sh "curl -I $API_URL:$PORT_1/scenario --silent | grep 200"
+                sh "curl -I $API_URL:$PORT_2/action --silent | grep 200"
+                sh "curl -I $API_URL:$PORT_2/actor --silent | grep 200"
             }
         }
-
     }
 }
