@@ -105,7 +105,7 @@ pipeline {
             environment{
                 TAG = "$IMAGE_TAG_STG"
                 SERVICE_NAME = "$IMAGE_NAME"
-                SERVICES_QUANTITY = "2"
+                SERVICES_QUANTITY = "3"
             }
             steps {
                 sh "docker-compose up -d --scale $SERVICE_NAME=$SERVICES_QUANTITY --force-recreate"
@@ -118,6 +118,7 @@ pipeline {
                 API_URL = "http://10.0.2.15"
                 PORT_1 = "3000"
                 PORT_2 = "3001"
+                PORT_3 = "3002"
                 END_P1 = "scenario"
                 END_P2 = "action"
                 END_P3 = "actor"
