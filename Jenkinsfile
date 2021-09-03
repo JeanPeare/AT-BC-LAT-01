@@ -126,7 +126,7 @@ pipeline {
             }
             steps {
                 sh "curl -I $API_URL:$PORT_1/$END_P1/$SC_ID --silent | grep 200"  
-                sh "curl --location --request PUT 'localhost:3000/action/' --header 'Content-Type: application/json' --data-raw '{"scenario": "gDEM9vj1OjncayQHE8GI", "actor": "Polo", "action": "Shoot Weapon", "target": "east", "scenes": "4"}'| grep 200"
+                sh "curl --location --request PUT 'localhost:3000/action/' --header 'Content-Type: application/json' --data-raw '{scenario: 'gDEM9vj1OjncayQHE8GI', actor: 'Polo', action: 'Shoot Weapon', target: 'east', scenes: '4'}'| grep 200"
             }
         }
     }
