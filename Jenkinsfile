@@ -91,8 +91,8 @@ pipeline {
             post {
                 always {
                     script {
-                        //sh "docker rmi -f $IMAGE_NAME:$TAG"
-                        //sh "docker logout"
+                        sh "docker rmi -f $IMAGE_NAME:$TAG"
+                        sh "docker logout"
                         sh "docker rmi -f $PRIVATE_IMAGE_NAME:$TAG"
                         sh "docker logout $NEXUS_SERVER_URL"
                     }
