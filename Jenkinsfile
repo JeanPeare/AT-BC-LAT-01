@@ -83,8 +83,8 @@ pipeline {
                 NEXUS_CREDENTIALS = credentials("nexus")
                 }
             steps {
-               // sh "echo '$DOCKER_HUB_CREDENTIALS_PSW' | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
-               // sh "docker-compose push $IMAGE_NAME"
+                sh "echo '$DOCKER_HUB_CREDENTIALS_PSW' | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
+                sh "docker-compose push $IMAGE_NAME"
                 sh "echo '$NEXUS_CREDENTIALS_PSW' | docker login -u $NEXUS_CREDENTIALS_USR --password-stdin $NEXUS_SERVER_URL"
                 sh "docker push $PRIVATE_IMAGE_NAME:$TAG"
             }
@@ -101,7 +101,7 @@ pipeline {
         }
         //CI Pipeline Finish
         //CD Pipeline Start
-        stage ('Deploy to Staging') {
+        /*stage ('Deploy to Staging') {
             environment{
                 TAG = "$IMAGE_TAG_STG"
                 SERVICE_NAME = "$IMAGE_NAME"
@@ -213,6 +213,6 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
     }
 }
